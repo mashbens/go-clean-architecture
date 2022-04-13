@@ -26,7 +26,10 @@ func NewService(repository Repository) Service {
 
 func (s *service) GetContentByID(id int) (content *Content, err error) {
 	result, err := s.repository.FindContentByID(id)
-	return result, err
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }
 
 func (s *service) GetContents() (contents []Content, err error) {

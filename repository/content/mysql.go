@@ -17,7 +17,10 @@ func NewMySQLRepository(db *gorm.DB) *MySQLRepository {
 }
 
 func (repo *MySQLRepository) FindContentByID(id int) (content *content.Content, err error) {
-
+	result := repo.db.First(&content, id)
+	if result.Error != nil {
+		return nil, result.Error
+	}
 	return content, nil
 }
 
