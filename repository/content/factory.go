@@ -9,9 +9,9 @@ func RepositoryFactory(dbCon *util.DatabaseConnection) content.Repository {
 	var contentRepository content.Repository
 
 	if dbCon.Driver == util.MySQL {
-		contentRepository = newMySQLRepository(dbCon.MySQL)
-	} else {
-		panic("Invalid database driver")
+		contentRepository = NewMySQLRepository(dbCon.MySQL)
+	} else if dbCon.Driver == util.PostgreSQL {
+		contentRepository = NewPostgreSQLRepository(dbCon.PostgreSQL)
 	}
 	return contentRepository
 }
