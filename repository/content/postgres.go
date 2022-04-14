@@ -34,7 +34,7 @@ func (repo *PostgreSQLRepository) InserContent(content content.Content) (err err
 	return
 }
 
-func (repo *PostgreSQLRepository) UpdateContent(content content.Content) (err error) {
+func (repo *PostgreSQLRepository) PutContent(content content.Content) (err error) {
 
 	return
 }

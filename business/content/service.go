@@ -4,7 +4,7 @@ type Repository interface {
 	FindContentByID(id int) (content *Content, err error)
 	FindAll() (contents []Content, err error)
 	InserContent(content Content) (err error)
-	UpdateContent(content Content) (err error)
+	PutContent(content Content) (err error)
 }
 
 type Service interface {
@@ -41,9 +41,17 @@ func (s *service) GetContents() (contents []Content, err error) {
 }
 
 func (s *service) CreateContent(content Content) (err error) {
-	return
+	err = s.repository.InserContent(content)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *service) UpdateContent(content Content) (err error) {
-	return
+	err = s.repository.PutContent(content)
+	if err != nil {
+		return err
+	}
+	return nil
 }

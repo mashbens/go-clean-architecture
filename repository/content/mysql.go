@@ -33,11 +33,17 @@ func (repo *MySQLRepository) FindAll() (contents []content.Content, err error) {
 }
 
 func (repo *MySQLRepository) InserContent(content content.Content) (err error) {
-
-	return
+	result := repo.db.Create(&content)
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
 }
 
-func (repo *MySQLRepository) UpdateContent(content content.Content) (err error) {
-
-	return
+func (repo *MySQLRepository) PutContent(content content.Content) (err error) {
+	result := repo.db.Save(&content)
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
 }

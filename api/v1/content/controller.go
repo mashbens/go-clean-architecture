@@ -28,7 +28,7 @@ func (controller *Controller) GetAll(c echo.Context) error {
 }
 
 func (controller *Controller) GetContentByID(c echo.Context) error {
-	req := new(request.Request)
+	req := new(request.CreateContentRequest)
 	if err := c.Bind(req); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
@@ -37,4 +37,35 @@ func (controller *Controller) GetContentByID(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 	return c.JSON(http.StatusOK, content)
+}
+
+func (controller *Controller) CreateContent(c echo.Context) error {
+	req := new(request.CreateContentRequest)
+	if err := c.Bind(req); err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+	err := controller.service.CreateContent(contentBusiness.Content{
+		Name:        req.Name,
+		Description: req.Description,
+	})
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+	return c.JSON(http.StatusOK, "success create content")
+}
+
+func (controller *Controller) UpdateContent(c echo.Context) error {
+	req := new(request.CreateContentRequest)
+	if err := c.Bind(req); err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+	err := controller.service.UpdateContent(contentBusiness.Content{
+		ID:          req.ID,
+		Name:        req.Name,
+		Description: req.Description,
+	})
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+	return c.JSON(http.StatusOK, "success update content")
 }
