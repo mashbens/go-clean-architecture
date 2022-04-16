@@ -9,7 +9,8 @@ import (
 
 type AppConfig struct {
 	App struct {
-		Port int `toml:"port"`
+		Port   int    `toml:"port"`
+		JWTKey string `toml:"jwt_key"`
 	} `toml:"app"`
 	Database struct {
 		Driver string `toml:"driver"`

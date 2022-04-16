@@ -7,6 +7,7 @@ import (
 	"clean-arch/util"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"os/signal"
 
@@ -20,10 +21,12 @@ func main() {
 	dbCon := util.NewConnectionDatabase(config)
 	defer dbCon.CloseConnection()
 
-	controllers := modules.RegisteModules(dbCon)
+	controllers := modules.RegisteModules(dbCon, config)
 
 	e := echo.New()
-
+	e.GET("/", func(c echo.Context) error {
+		return c.String(http.StatusOK, "hello world")
+	})
 	api.RegistrationPath(e, controllers)
 
 	go func() {

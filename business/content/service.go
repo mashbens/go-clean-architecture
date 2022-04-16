@@ -1,5 +1,9 @@
 package content
 
+import (
+	validator "github.com/go-playground/validator/v10"
+)
+
 type Repository interface {
 	FindContentByID(id int) (content *Content, err error)
 	FindAll() (contents []Content, err error)
@@ -16,11 +20,13 @@ type Service interface {
 
 type service struct {
 	repository Repository
+	validate   *validator.Validate
 }
 
 func NewService(repository Repository) Service {
 	return &service{
 		repository: repository,
+		validate:   validator.New(),
 	}
 }
 
@@ -41,6 +47,11 @@ func (s *service) GetContents() (contents []Content, err error) {
 }
 
 func (s *service) CreateContent(content Content) (err error) {
+	// validate masih error
+	err = s.validate.Struct(content)
+	if err != nil {
+		return err
+	}
 	err = s.repository.InserContent(content)
 	if err != nil {
 		return err
