@@ -1,5 +1,7 @@
 [app]
 port = 8080
+jwtkey = "my_screet_key"
+
 
 [database]
 
