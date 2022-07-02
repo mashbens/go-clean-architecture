@@ -1,7 +1,7 @@
 [app]
-port = 8081
-jwtkey = "my_screet_key"
+port = ""
+jwtkey = ""
 
 [database]
-driver = "MySQL"
-db_url = "root:arif1412@tcp(127.0.0.1:3306)/test_user?charset=utf8mb4&parseTime=True&loc=Local"
+driver = ""
+db_url = ""
