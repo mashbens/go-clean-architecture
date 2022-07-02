@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"clean-arch/api/common/response"
 	"fmt"
 	"net/http"
 	"strings"
@@ -19,11 +20,11 @@ func JWTMiddleware() echo.MiddlewareFunc {
 			fmt.Println("Token Acepted")
 			signature := strings.Split(c.Request().Header.Get("Authorization"), " ")
 			if len(signature) < 2 {
-				return c.JSON(http.StatusForbidden, "Invalid token")
+				return c.JSON(http.StatusForbidden, response.InvalidToken())
 			}
 
 			if signature[0] != "Bearer" {
-				return c.JSON(http.StatusForbidden, "Invalid token")
+				return c.JSON(http.StatusForbidden, response.InvalidToken())
 			}
 
 			claim := jwt.MapClaims{}
@@ -33,7 +34,7 @@ func JWTMiddleware() echo.MiddlewareFunc {
 
 			method, ok := token.Method.(*jwt.SigningMethodHMAC)
 			if !ok || method != jwtSignedMethod {
-				return c.JSON(http.StatusForbidden, "Invalid token")
+				return c.JSON(http.StatusForbidden, response.InvalidToken())
 			}
 
 			return next(c)
